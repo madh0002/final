@@ -1,8 +1,8 @@
 properties([pipelineTriggers([githubPush()])])
 node('linux') {
     stage("Test Stack") {
-       git 'https://github.com/madh0002/assignment11.git'
-       sh 'aws s3 cp s3://madhu-assignment10-bucket/classweb.html ./index.html '
+       git 'https://github.com/madh0002/final.git'
+       sh 'aws cloudinformation describe-stacks final'
     }
     stage("Deploy Redis") {
        sh 'docker ps -a'
