@@ -2,7 +2,7 @@ properties([pipelineTriggers([githubPush()])])
 node('linux') {
     stage("Test Stack") {
        git 'https://github.com/madh0002/final.git'
-       sh 'aws cloudinformation describe-stacks final'
+       sh 'aws cloudinformation describe-stacks --stack-name final'
     }
     stage("Deploy Redis") {
        sh 'docker ps -a'
