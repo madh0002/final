@@ -6,6 +6,7 @@ node('linux') {
         //NOTE: You may need to wrap all the following aws commands with AWS credential
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
+       sh 'curl ifconfig.me'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
         //wait for the stack-create-compete
