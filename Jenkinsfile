@@ -10,6 +10,7 @@ node('linux') {
         //Check that docker-swarm.json. 
         //wait for the stack-create-compete
         //describe the final-test stack
+        //test webhook
        sh 'aws cloudformation describe-stacks --stack-name final --region us-east-1'
         //You need to wrap all the following SSH commands with ssh agent
         //run the uptime command on docker1 over ssh.
