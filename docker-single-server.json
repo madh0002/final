@@ -156,7 +156,7 @@
           "Description": "Name of your EC2 KeyPair to enable SSH access to the instances.",
           "Type": "AWS::EC2::KeyPair::KeyName",
           "ConstraintDescription": "must be the name of an existing EC2 KeyPair.",
-	  "Value": "Insance"
+	  "Default": "Insance"
       },
       "YourIp": {
         "Description": "The current CIDR IP address of your workstation (x.x.x.x/32).",
