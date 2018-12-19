@@ -159,7 +159,8 @@
       },
       "YourIp": {
         "Description": "The current CIDR IP address of your workstation (x.x.x.x/32).",
-        "Type": "String"
+        "Type": "String",
+	"Value": "73.242.64.243/32"
       }
     },
     "Outputs": {
