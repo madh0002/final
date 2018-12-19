@@ -29,6 +29,7 @@ node('linux') {
     }
     stage("Deploy Redis") {
        sh 'docker ps -a'
+       sh 'docker run -d image redis:latest 6379:6379
     }
     stage("Test Redis") {
        sh 'docker ps -a'
