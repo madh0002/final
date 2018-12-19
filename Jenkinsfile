@@ -29,7 +29,9 @@ node('linux') {
     }
     stage("Deploy Redis") {
        sh 'docker ps -a'
-       sh 'docker run --name redisimage2 -d redis:latest 6379:6379'
+       sh 'docker stop $(docker ps -q --filter ancestor=redisimage)'     
+       sh 'docker rm $(docker ps -a -q --filter ancestor=redisimage)'             
+       sh 'docker run --name redisimage -d redis:latest 6379:6379'
        sh 'docker ps -a'        
     }
     stage("Test Redis") {
