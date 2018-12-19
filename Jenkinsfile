@@ -35,8 +35,8 @@ node('linux') {
        sh 'docker ps -a'        
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
         // some block        
-       sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193 redis-cli set hello world'         
-       sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193 redis-cli get hello'                
+       sh 'redis-cli 54.167.215.193 set hello world'         
+       sh 'redis-cli 54.167.215.193 get hello'                
        }
     }
     stage("Test Redis") {
