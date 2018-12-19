@@ -36,8 +36,8 @@ node('linux') {
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
         // some block     
        sh 'ssh ubuntu@54.167.215.193'
-       sh 'redis-cli set hello world'         
-       sh 'redis-cli get hello'                
+       sh 'ssh redis-cli set hello world'         
+       sh 'ssh redis-cli get hello'                
        }
     }
     stage("Test Redis") {
