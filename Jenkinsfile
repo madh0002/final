@@ -33,8 +33,8 @@ node('linux') {
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
        sh 'docker run --name redisimage -d redis:latest 6379:6379'
        sh 'docker ps -a'        
-       sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193 redis-cli set hello world'         
-       sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193 redis-cli get hello'                
+       sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193:6379 redis-cli set hello world'         
+       sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193:6379 redis-cli get hello'                
     }
     stage("Test Redis") {
        sh 'docker ps -a'
