@@ -158,7 +158,7 @@
           "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
       },
       "YourIp": {
-        "Description": "The current CIDR IP address of your workstation (73.242.64.243/32).",
+        "Description": "The current CIDR IP address of your workstation (x.x.x.x/32).",
         "Type": "String"
       }
     },
