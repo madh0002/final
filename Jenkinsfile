@@ -38,7 +38,7 @@ node('linux') {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block     
        //sh 'ssh ubuntu@34.233.121.37:6379 exec redis-cli set hello world'
-       sh 'redis-cli -h 34.233.121.37 -p 6379 set hello world'
+       sh 'ssh redis-cli -h 34.233.121.37 -p 6379 set hello world'
        //sh 'exec redis-cli set hello world'         
        //sh 'exec redis-cli get hello'                
        }
