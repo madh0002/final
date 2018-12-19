@@ -6,7 +6,7 @@ node('linux') {
         //NOTE: You may need to wrap all the following aws commands with AWS credential
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
-       sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1' 
+       //sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1' 
        sh 'curl ifconfig.me'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
@@ -24,7 +24,7 @@ node('linux') {
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
         // some block
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.167.215.193 uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.233.121.37 uptime'           
        }
     }
     stage("Deploy Redis") {
@@ -37,7 +37,7 @@ node('linux') {
     stage("Test Redis") {
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
         // some block     
-       sh 'ssh ubuntu@54.167.215.193'
+       sh 'ssh ubuntu@34.233.121.37'
        sh 'exec redis-cli set hello world'         
        sh 'exec redis-cli get hello'                
        }
