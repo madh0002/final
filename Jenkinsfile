@@ -33,6 +33,8 @@ node('linux') {
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
        sh 'docker run --name redisimage -d redis:latest 6379:6379'
        sh 'docker ps -a'        
+    }
+    stage("Test Redis") {
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
         // some block     
        sh 'ssh ubuntu@54.167.215.193'
@@ -40,12 +42,7 @@ node('linux') {
        sh 'exec redis-cli get hello'                
        }
     }
-    stage("Test Redis") {
-       sh 'docker ps -a'
-    }
     stage("Delete Stack") {
        sh 'docker ps -a'
     }
 }
-
-
