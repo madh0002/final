@@ -32,6 +32,7 @@ node('linux') {
        sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
        sh 'docker run --name redisimage -d redis:latest 6379:6379'
+       sh 'apt install redis-tools -y'
        sh 'docker ps -a'        
     }
     stage("Test Redis") {
