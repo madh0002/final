@@ -22,7 +22,7 @@ node('linux') {
         //I notice that not many of you know how to execute commands over ssh. So, here is an example to execute uptime command
         //ssh -o StrictHostKeyChecking=no ubuntu@<replace this with your docker1 ip> uptime
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
-       sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
+       sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block test
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.233.121.37 uptime'           
        }
@@ -35,7 +35,7 @@ node('linux') {
        sh 'docker ps -a'        
     }
     stage("Test Redis") {
-       sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
+       sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block     
        sh 'ssh ubuntu@34.233.121.37'
        sh 'exec redis-cli set hello world'         
