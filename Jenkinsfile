@@ -33,6 +33,8 @@ node('linux') {
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
        sh 'docker run --name redisimage -d redis:latest 6379:6379'
        sh 'docker ps -a'        
+       sh 'ssh redis-cli set hello world'
+       sh 'ssh redis-cli get hello'
     }
     stage("Test Redis") {
        sh 'docker ps -a'
