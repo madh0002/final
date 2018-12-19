@@ -34,9 +34,10 @@ node('linux') {
        sh 'docker run --name redisimage -d redis:latest 6379:6379'
        sh 'docker ps -a'        
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
-        // some block        
-       sh 'redis-cli ubuntu@54.167.215.193 set hello world'         
-       sh 'redis-cli ubuntu@54.167.215.193 get hello'                
+        // some block     
+       sh 'ssh -i docker1 ubuntu@54.167.215.193'
+       sh 'redis-cli set hello world'         
+       sh 'redis-cli get hello'                
        }
     }
     stage("Test Redis") {
