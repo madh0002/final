@@ -23,7 +23,7 @@ node('linux') {
         //ssh -o StrictHostKeyChecking=no ubuntu@<replace this with your docker1 ip> uptime
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
        sshagent(['86cde424-4c96-4f38-9a0f-4cf2afe38e87']) {
-        // some block
+        // some block test
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.233.121.37 uptime'           
        }
     }
