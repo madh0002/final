@@ -42,7 +42,7 @@ node('linux') {
        //sh 'exec redis-cli get hello'     
        //test from a diff network
        }
-    }
+//    }
     stage("Delete Stack") {
        sh 'docker ps -a'
     }
