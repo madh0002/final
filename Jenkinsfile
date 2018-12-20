@@ -24,7 +24,7 @@ node('linux') {
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block test
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@manager1PublicIP uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.233.121.37 uptime'           
        }
     }
     stage("Deploy Redis") {
