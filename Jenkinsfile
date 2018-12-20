@@ -40,7 +40,8 @@ node('linux') {
        sh 'ssh ubuntu@100.25.181.210 \' exec redis-cli -h 100.25.181.210 set hello world\''
        //sh 'exec redis-cli -h 100.25.181.210 set hello world'
        //sh 'exec redis-cli set hello world'         
-       //sh 'exec redis-cli get hello'                
+       //sh 'exec redis-cli get hello'     
+       //test from a diff network
        }
     }
     stage("Delete Stack") {
