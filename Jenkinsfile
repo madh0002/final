@@ -32,7 +32,7 @@ node('linux') {
        sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
        sh 'docker run --name redisimage -d redis:latest -h 34.233.121.37 -p 6379:6379'
-       sh 'docker ps -a'        
+       sh 'docker ps -h 34.233.121.37 -a'        
     }
     stage("Test Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
