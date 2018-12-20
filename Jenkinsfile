@@ -6,7 +6,7 @@ node('linux') {
         //NOTE: You may need to wrap all the following aws commands with AWS credential
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
-       //sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1' 
+       sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1' 
        sh 'curl ifconfig.me'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
@@ -24,20 +24,20 @@ node('linux') {
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block test
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.233.121.37 uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\' docker ps -a\' uptime'           
        }
     }
     stage("Deploy Redis") {
        sh 'docker ps -a'
        sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
-       sh 'docker run --name redisimage -d redis:latest -h 34.233.121.37 -p 6379:22'
-       sh 'docker ps -h 34.233.121.37 -a'        
+       sh 'docker run --name redisimage -d redis:latest -h \' docker ps-a\' -p 6379:6379'
+       sh 'docker ps -a'        
     }
     stage("Test Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block     
-       sh 'ssh ubuntu@34.233.121.37 \' exec redis-cli -h 34.233.121.37 set hello world\''
+       sh 'ssh ubuntu@\' docker ps-a\' \' exec redis-cli -h \' docker ps-a\' set hello world\''
        //sh 'exec redis-cli -h 34.233.121.37 set hello world'
        //sh 'exec redis-cli set hello world'         
        //sh 'exec redis-cli get hello'                
