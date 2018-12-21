@@ -89,7 +89,7 @@
                         "IpProtocol": "tcp",
                         "FromPort": "22",
                         "ToPort": "22",
-                        "CidrIp": {"Ref": "YourIp"}
+                        "CidrIp": {"Ref": "YourIp"/32}
                     }
                 ]
             }
@@ -164,7 +164,7 @@
       "YourIp": {
         "Description": "The current CIDR IP address of your workstation (x.x.x.x/32).",
         "Type": "String",
-	"Default": "52.205.197.43/32"
+	"Default": "52.205.197.43"
       }
     },
     "Outputs": {
