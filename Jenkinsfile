@@ -6,17 +6,17 @@ node('linux') {
         //NOTE: You may need to wrap all the following aws commands with AWS credential
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
-//sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip) ||/32'
+sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=KeyName,ParameterValue=EastVirginaNov.pem ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip)/32'
 //sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
-//sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
+sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
         sh 'curl ifconfig.me/ip'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
         //wait for the stack-create-compete
         //describe the final-test stack
         //test webhook
-       sh 'brew install jq'
-       sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1\' jq .\''
+       sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
+       sh 'aws ec2 describe-instances'
         //You need to wrap all the following SSH commands with ssh agent
         //run the uptime command on docker1 over ssh.
         //You need to parse the output of the stack creation to find docker1's ip.
@@ -31,17 +31,19 @@ node('linux') {
        }
     }
     stage("Deploy Redis") {
-       sh 'docker ps -a'
-       sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
-       sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
-       sh 'docker run --name redisimage -d redis:latest -h 3.82.154.61 -p 6379:6379'
-       sh 'docker images'
+       sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
+       //sh 'docker ps -a'
+       //sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
+       //sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
+       sh 'ssh ubuntu@3.82.154.61 \' docker run --name redisimage -d redis:latest -h 3.82.154.61 -p 6379:6379 \''
+      // sh 'docker images'
       //sh 'docker run -d redis:latest -h 3.80.250.214 -p 6379:6379'
-    }
+       }
+       }
     stage("Test Redis") {
        sh 'docker ps -a'        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
-       sh 'ssh ubuntu@3.82.154.61 \' sudo apt-get install redis-tools -y \''
+       //sh 'ssh ubuntu@3.82.154.61 \' sudo apt-get install redis-tools -y \''
        //sh 'ssh ubuntu@3.82.154.61 \' exec redis-cli -h 3.82.154.61 set hello world\''
        // sh 'ssh exec redis-cli -h 3.80.250.214 set hello world'
        sh 'ssh redis-cli set hello world'         
