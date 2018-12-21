@@ -15,7 +15,7 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --reg
         //wait for the stack-create-compete
         //describe the final-test stack
         //test webhook
-       sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1'
+       sh 'aws cloudformation describe-stacks --stack-name final-test1 --region us-east-1'
         //You need to wrap all the following SSH commands with ssh agent
         //run the uptime command on docker1 over ssh.
         //You need to parse the output of the stack creation to find docker1's ip.
@@ -39,7 +39,7 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --reg
        sh 'docker ps -a -q'        
        //sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
        //sh 'ssh ubuntu@100.25.181.210 \' exec redis-cli -h 100.25.181.210 set hello world\''
-       sh 'ssh redis-cli -h 100.25.181.210 set hello world'
+       sh 'ssh redis-cli set hello world'
        //sh 'exec redis-cli set hello world'         
        //sh 'exec redis-cli get hello'     
        //test from a diff network
