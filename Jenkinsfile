@@ -11,7 +11,7 @@ node('linux') {
        //sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
        script {
-         dockerip=sh '$(aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
+         dockerip = sh '$(aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
          }
        sh 'echo $dockerip'    
        sh 'echo dockerip'
