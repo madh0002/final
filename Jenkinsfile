@@ -30,7 +30,7 @@ node('linux') {
            sh 'docker ps -a'           
        //sh 'ssh ubuntu@52.90.213.249 \'docker ps -a\''
        //sh 'ssh ubuntu@52.90.213.249 \' sudo apt-get install redis-tools -y \''
-       sh 'ssh ubuntu@3.83.253.166 \' redis-cli set hello world\''
+       sh 'ssh ubuntu@3.83.253.166 \' docker redis-cli set hello world\''
        // sh 'ssh exec redis-cli -h 3.80.250.214 set hello world'
        //sh 'ssh redis-cli set hello world'         
        //sh 'exec redis-cli get hello'     
