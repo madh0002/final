@@ -16,7 +16,7 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test --regi
         //describe the final-test stack
         //test webhook
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
-       sh 'aws ec2 describe-instances'
+       sh 'aws ec2 describe-instances --region us-east-1'
         //You need to wrap all the following SSH commands with ssh agent
         //run the uptime command on docker1 over ssh.
         //You need to parse the output of the stack creation to find docker1's ip.
