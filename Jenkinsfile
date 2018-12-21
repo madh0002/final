@@ -7,15 +7,15 @@ node('linux') {
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
 //sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip) ||/32'
-//sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
-//sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --region us-east-1'
+sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
+sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
         sh 'curl ifconfig.me/ip'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
         //wait for the stack-create-compete
         //describe the final-test stack
         //test webhook
-       sh 'aws cloudformation describe-stacks --stack-name final-test1 --region us-east-1'
+       sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1 | jq .'
         //You need to wrap all the following SSH commands with ssh agent
         //run the uptime command on docker1 over ssh.
         //You need to parse the output of the stack creation to find docker1's ip.
@@ -47,6 +47,6 @@ node('linux') {
 //    }
     stage("Delete Stack") {
        sh 'docker ps -a'
-       sh 'aws cloudformation delete-stack --stack-name final-test1'
+       sh 'aws cloudformation delete-stack --stack-name final-test'
     }
 }
