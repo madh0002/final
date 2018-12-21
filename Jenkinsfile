@@ -1,6 +1,5 @@
 properties([pipelineTriggers([githubPush()])])
 node('linux') {
-    agent any
     parameters {
     string(name: 'dockerip',
            defaultValue: '0.0.0.0',
