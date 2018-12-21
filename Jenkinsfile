@@ -18,7 +18,7 @@ node('linux') {
            //sh 'docker ps -a'
            //sh 'ssh ubuntu@52.90.213.249 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
            //sh 'ssh ubuntu@52.90.213.249 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
-           sh 'ssh ubuntu@52.90.213.249 \' docker run --name redisimage -d redis:latest -h 52.90.213.249 -p 6379:6379 \''
+           sh 'ssh ubuntu@52.90.213.249 \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
            }
        }
     stage("Test Redis") {
