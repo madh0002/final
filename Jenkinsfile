@@ -35,6 +35,6 @@ node('linux') {
     }
     stage("Delete Stack") {
        sh 'docker ps -a'
-       sh 'aws cloudformation delete-stack --stack-name final-test'
+       sh 'aws cloudformation delete-stack --stack-name final-test --region us-east-1'
     }
 }
