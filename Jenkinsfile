@@ -6,9 +6,9 @@ node('linux') {
         //NOTE: You may need to wrap all the following aws commands with AWS credential
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
-sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip)/32'
+//sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip)/32'
 //sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
-sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
+//sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
         sh 'curl ifconfig.me/ip'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
@@ -27,7 +27,7 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test --regi
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block test
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.82.154.61 uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.172.86.78 uptime'           
        }
     }
     stage("Deploy Redis") {
@@ -35,7 +35,7 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test --regi
        //sh 'docker ps -a'
        //sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
        //sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
-       sh 'ssh ubuntu@3.82.154.61 \' docker run --name redisimage -d redis:latest -h 3.82.154.61 -p 6379:6379 \''
+       sh 'ssh ubuntu@54.172.86.78 \' docker run --name redisimage -d redis:latest -h 54.172.86.78 -p 6379:6379 \''
       // sh 'docker images'
       //sh 'docker run -d redis:latest -h 3.80.250.214 -p 6379:6379'
        }
