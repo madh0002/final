@@ -13,7 +13,7 @@ node('linux') {
        sh 'echo $docker2IP'        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\' echo docker2IP\' uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\'docker2IP\' uptime'           
        }
     }
     stage("Deploy Redis") {
