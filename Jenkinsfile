@@ -1,5 +1,9 @@
 properties([pipelineTriggers([githubPush()])])
 node('linux') {
+  parameters {
+    string(name: DOCKER2IP, defaultValue: '')
+  }
+
     stage("Test Stack") {
        //access private git repo
        git 'https://github.com/madh0002/final.git' 
