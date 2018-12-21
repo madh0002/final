@@ -24,7 +24,7 @@ node('linux') {
        }
     stage("Test Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
-       sh 'ssh ubuntu@52.90.213.249 \'docker ps -a'\'
+       sh 'ssh ubuntu@52.90.213.249 \'docker ps -a\''
        //sh 'ssh ubuntu@52.90.213.249 \' sudo apt-get install redis-tools -y \''
        //sh 'ssh ubuntu@52.90.213.249 \' redis-cli set hello world\''
        // sh 'ssh exec redis-cli -h 3.80.250.214 set hello world'
