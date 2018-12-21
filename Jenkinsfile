@@ -9,7 +9,7 @@ node('linux') {
 //sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip) ||/32'
 //sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43'
 //sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
-        sh 'curl ifconfig.me/ip || /32'
+        sh 'curl ifconfig.me/ip ||\' /32\''
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
         //wait for the stack-create-compete
