@@ -3,7 +3,7 @@ node('linux') {
     Parameters {
     string(name: 'dockerip',
            defaultValue: '0.0.0.0',
-           description: 'Holds docker1 public IP'
+           description: 'Holds docker1 public IP')
     }
     stage("Test Stack") {
        //access private git repo
