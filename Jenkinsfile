@@ -7,10 +7,9 @@ node('linux') {
     stage("Test Stack") {
        //access private git repo
        git 'https://github.com/madh0002/final.git' 
-       //sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip)/32'
-       //sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
+       sh 'aws cloudformation create-stack --stack-name final-test --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip)/32'
+       sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
-       //sh 'aws ec2 describe-instances --region us-east-1 --query Instances[*]'
        dockerip=sh '$(aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
        sh 'echo $dockerip'        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
