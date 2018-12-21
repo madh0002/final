@@ -53,7 +53,6 @@
                       "", [
                         "#!/bin/bash -xe\n",
                         "sudo apt install redis-tools -y"
-			"sudo apt install redis-server"
 			"sudo apt-get install redis-tools -y"
 			"sudo apt-get install redis-server"
 						]
