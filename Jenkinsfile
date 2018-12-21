@@ -1,9 +1,9 @@
 properties([pipelineTriggers([githubPush()])])
 node('linux') {
   parameters {
-    string(name: DOCKER2IP, defaultValue: '')
+    string(name: DOCKERIP, defaultValue: '')
   }
-
+    def dockerip = env.DOCKERIP
     stage("Test Stack") {
        //access private git repo
        git 'https://github.com/madh0002/final.git' 
@@ -11,13 +11,11 @@ node('linux') {
        //sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
        //sh 'aws ec2 describe-instances --region us-east-1 --query Instances[*]'
-       sh 'dockerIP=$(aws ec2 describe-instances --region us-east-1 --instance-ids i-062121fb8af9dcfa7 --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
-       sh 'echo $dockerIP'
-       sh 'DOCKER2IP=$(aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'       
-       sh 'echo $DOCKER2IP'        
+       sh 'dockerip=$(aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'       
+       sh 'echo $dockerip'        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\'$DOCKER2IP\' uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\'$dockerip\' uptime'           
        }
     }
     stage("Deploy Redis") {
