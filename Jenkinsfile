@@ -16,8 +16,8 @@ node('linux') {
     stage("Deploy Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            //sh 'docker ps -a'
-           //sh 'ssh ubuntu@52.90.213.249 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
-           //sh 'ssh ubuntu@52.90.213.249 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
+           sh 'ssh ubuntu@52.90.213.249 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
+           sh 'ssh ubuntu@52.90.213.249 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
            sh 'ssh ubuntu@52.90.213.249 \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
            }
        }
