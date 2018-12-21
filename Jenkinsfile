@@ -14,8 +14,7 @@ node('linux') {
        script {
          dockerip = sh 'aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text'
          }
-       sh 'echo "$dockerip"'    
-       sh 'echo "dockerip"'
+       sh 'echo $(params.dockerip)'    
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.239.255.153 uptime'
@@ -24,8 +23,8 @@ node('linux') {
     stage("Deploy Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            sh 'docker ps -a'
-           //sh 'ssh ubuntu@34.239.255.153 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
-           //sh 'ssh ubuntu@34.239.255.153 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
+           sh 'ssh ubuntu@34.239.255.153 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
+           sh 'ssh ubuntu@34.239.255.153 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
            sh 'ssh ubuntu@34.239.255.153 \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
            }
        }
