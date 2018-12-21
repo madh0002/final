@@ -8,7 +8,7 @@ node('linux') {
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
        //sh 'aws ec2 describe-instances --region us-east-1 --query Instances[*]'
        sh 'dockerIP=$(aws ec2 describe-instances --region us-east-1 --instance-ids i-062121fb8af9dcfa7 --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
-       sh 'echo $dockerIP
+       sh 'echo $dockerIP'
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@52.90.213.249 uptime'           
