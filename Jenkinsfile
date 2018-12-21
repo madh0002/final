@@ -7,6 +7,7 @@ node('linux') {
        // sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
        sh 'aws ec2 describe-instances --region us-east-1 --query Instances[*]'
+       sh 'aws ec2 describe-instances --instance-ids i-062121fb8af9dcfa7 --query "Reservations[*].Instances*].PublicIpAddress" --output=text'
        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
