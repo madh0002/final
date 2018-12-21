@@ -13,7 +13,7 @@ node('linux') {
        //sh 'aws ec2 describe-instances --region us-east-1 --query Instances[*]'
        sh 'dockerIP=$(aws ec2 describe-instances --region us-east-1 --instance-ids i-062121fb8af9dcfa7 --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
        sh 'echo $dockerIP'
-       sh 'DOCKER2IP=$(curl aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'       
+       sh 'DOCKER2IP=$(aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'       
        sh 'echo $DOCKER2IP'        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
