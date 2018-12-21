@@ -17,16 +17,19 @@ node('linux') {
     stage("Deploy Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            //sh 'docker ps -a'
-           sh 'ssh ubuntu@52.90.213.249 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
-           sh 'ssh ubuntu@52.90.213.249 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
-           sh 'ssh ubuntu@52.90.213.249 \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
+           sh 'ssh ubuntu@$dockerIP \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
+           sh 'ssh ubuntu@$dockerIP \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
+           sh 'ssh ubuntu@$dockerIP \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
+           //sh 'ssh ubuntu@52.90.213.249 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
+           //sh 'ssh ubuntu@52.90.213.249 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
+           //sh 'ssh ubuntu@52.90.213.249 \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
            }
        }
     stage("Test Redis") {
        sh 'docker ps -a'        
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
-       sh 'ssh ubuntu@52.90.213.249 \' sudo apt-get install redis-tools -y \''
-       sh 'ssh ubuntu@52.90.213.249 \' redis-cli set hello world\''
+       sh 'ssh ubuntu@$dockerIP \' sudo apt-get install redis-tools -y \''
+       sh 'ssh ubuntu@$dockerIP \' redis-cli set hello world\''
        // sh 'ssh exec redis-cli -h 3.80.250.214 set hello world'
        //sh 'ssh redis-cli set hello world'         
        //sh 'exec redis-cli get hello'     
