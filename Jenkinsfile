@@ -1,10 +1,11 @@
 properties([pipelineTriggers([githubPush()])])
-    Parameters {
+node('linux') {
+    agent any
+    parameters {
     string(name: 'dockerip',
            defaultValue: '0.0.0.0',
            description: 'Holds docker1 public IP')
     }
-node('linux') {
     stage("Test Stack") {
        //access private git repo
        git 'https://github.com/madh0002/final.git' 
