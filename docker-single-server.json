@@ -52,7 +52,7 @@
                     "Fn::Join" : [
                       "", [
                         "#!/bin/bash -xe\n",
-                        "apt install redis-tools -y"
+                        "sudo apt install redis-tools -y"
 						]
                     ]
                   }
