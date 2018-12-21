@@ -8,7 +8,7 @@ node('linux') {
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
 //sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip) ||/32'
 sh 'aws cloudformation create-stack --stack-name final-test2 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
-sh 'aws cloudformation wait stack-create-complete --stack-name $STACK_ID_FROM_CREATE_STACK'
+sh 'aws wait stack-create-complete --stack-name $STACK_ID_FROM_CREATE_STACK'
         sh 'curl ifconfig.me/ip'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
