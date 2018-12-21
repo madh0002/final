@@ -32,7 +32,8 @@ node('linux') {
        sh 'ssh ubuntu@34.224.70.117 \' sudo apt-get install redis-tools -y \''
        sh 'ssh ubuntu@34.224.70.117 \' sudo apt-get install redis-server -y \''
        sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.224.70.117 \' exec redis-cli set hello world\''
-       //sh 'ssh exec redis-cli -h 34.224.70.117 set hello world'
+       sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.224.70.117 \' exec redis-cli get hello\''
+           //sh 'ssh exec redis-cli -h 34.224.70.117 set hello world'
        //sh 'ssh redis-cli set hello world'         
        //sh 'exec redis-cli get hello'     
        //test from a diff network
