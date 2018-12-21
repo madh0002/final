@@ -8,7 +8,7 @@ node('linux') {
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
        //sh 'aws ec2 describe-instances --region us-east-1 --query Instances[*]'
        sh 'dockerIP=$(aws ec2 describe-instances --region us-east-1 --instance-ids i-062121fb8af9dcfa7 --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)'
-       
+       sh 'echo $dockerIP
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@52.90.213.249 uptime'           
@@ -17,7 +17,7 @@ node('linux') {
     stage("Deploy Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            //sh 'docker ps -a'
-           sh 'ssh ubuntu@$dockerIP \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
+           sh 'ssh ubuntu@echo $dockerIP \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
            sh 'ssh ubuntu@$dockerIP \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
            sh 'ssh ubuntu@$dockerIP \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
            //sh 'ssh ubuntu@52.90.213.249 \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
