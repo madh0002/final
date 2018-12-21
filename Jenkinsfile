@@ -33,14 +33,14 @@ node('linux') {
        sh 'docker ps -a -q'
        sh 'docker stop $(docker ps -a -q --filter ancestor=redis)'     
        sh 'docker rm $(docker ps -a -q --filter ancestor=redis)'             
-      // sh 'docker run --name redisimage -d redis:latest -h 3.80.250.214 -p 6379:6379'
-      sh 'docker run -d redis:latest -h 3.80.250.214 -p 6379:6379'
+       sh 'docker run --name redisimage -d redis:latest -h 3.80.250.214 -p 6379:6379'
+      //sh 'docker run -d redis:latest -h 3.80.250.214 -p 6379:6379'
     }
     stage("Test Redis") {
        sh 'docker ps -a -q'        
        //sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
-       sh 'ssh ubuntu@3.80.250.214 \' redis-cli set hello world\''
-       //sh 'ssh redis-cli set hello world'
+      // sh 'ssh ubuntu@3.80.250.214 \' redis-cli set hello world\''
+       sh 'ssh redis-cli redisimage set hello world'
        //sh 'exec redis-cli set hello world'         
        //sh 'exec redis-cli get hello'     
        //test from a diff network
