@@ -7,8 +7,8 @@ node('linux') {
         //create a cloudformation stack using a modified docker-single-server.json. Set the KeyName to the one you used to ssh your ec2 instances.
         //YourIp should be Jenkins slave IP. You can use curl ifconfig.me to get its public ip, not recommended in production though. 
 //sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=$(curl ifconfig.me/ip) ||/32'
-sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
-sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --region us-east-1'
+//sh 'aws cloudformation create-stack --stack-name final-test1 --template-body file://docker-single-server.json --region=us-east-1 --parameters ParameterKey=YourIp,ParameterValue=52.205.197.43/32'
+//sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --region us-east-1'
         sh 'curl ifconfig.me/ip'
         //NOTE: The modified json file should install redis-tools using the UserData section. docker-swarm.json has good examples. 
         //Check that docker-swarm.json. 
@@ -26,7 +26,7 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --reg
         //NOTE: The jenkins slave ip and docker1 ip should NOT be hardcoded.  
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // some block test
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@100.25.181.210 uptime'           
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.85.98.74 uptime'           
        }
     }
     stage("Deploy Redis") {
@@ -38,8 +38,8 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --reg
     stage("Test Redis") {
        sh 'docker ps -a -q'        
        //sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
-       //sh 'ssh ubuntu@100.25.181.210 \' exec redis-cli -h 100.25.181.210 set hello world\''
-       sh 'ssh redis-cli set hello world'
+       sh 'ssh ubuntu@3.85.98.74 \' redis-cli set hello world\''
+       //sh 'ssh redis-cli set hello world'
        //sh 'exec redis-cli set hello world'         
        //sh 'exec redis-cli get hello'     
        //test from a diff network
@@ -47,5 +47,6 @@ sh 'aws cloudformation wait stack-create-complete --stack-name final-test1 --reg
 //    }
     stage("Delete Stack") {
        sh 'docker ps -a'
+       sh 'aws cloudformation delete-stack --stack-name final-test1'
     }
 }
