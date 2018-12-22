@@ -1,10 +1,5 @@
 properties([pipelineTriggers([githubPush()])])
 node('linux') {
-    //parameters {
-    //string(name: 'dockerip',
-      //     defaultValue: '0.0.0.0',
-        //   description: 'Holds docker1 public IP')
-    //}
     stage("Test Stack") {
        //access private git repo
        git 'https://github.com/madh0002/final.git' 
@@ -12,15 +7,15 @@ node('linux') {
        //sh 'aws cloudformation wait stack-create-complete --stack-name final-test --region us-east-1'
        sh 'aws cloudformation describe-stacks --stack-name final-test --region us-east-1' 
       // script {
-       sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
            sh """
            dockip='aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress"'
            cat dockip
            dockerip=cat dockip | tr -d '[]"[:space:]'
            cat dockerip
-           ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime
            """
+         sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
+           sh 'ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime'
        }
     }
     stage("Deploy Redis") {
