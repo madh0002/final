@@ -1,6 +1,4 @@
 properties([pipelineTriggers([githubPush()])])
-def dockerip;
-def dockip;
 node('linux') {
     //parameters {
     //string(name: 'dockerip',
