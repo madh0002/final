@@ -18,7 +18,7 @@ node('linux') {
            sh """
            dockip=\'aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" \'
            cat dockip
-           cat dockip | tr -d \'"'[]"\'
+           cat dockip | tr -d '[]"'
 //           sh 'ssh -o StrictHostKeyChecking=no ubuntu@\' cat dockip.txt \' uptime'
            """
        }
