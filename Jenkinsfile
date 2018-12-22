@@ -1,4 +1,6 @@
 properties([pipelineTriggers([githubPush()])])
+def dockip;
+def dockerip;
 node('linux') {
     stage("Test Stack") {
        //access private git repo
