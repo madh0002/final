@@ -6,7 +6,7 @@ node('linux') {
        // script {
          //dockerip='`aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" `'
        sh """
-        dockip=`34.239.255.153`
+        def dockip=`34.239.255.153`
        //}
        echo "\$dockip"
        """
