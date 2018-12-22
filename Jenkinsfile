@@ -21,8 +21,8 @@ node('linux') {
            dockerip=cat dockip | tr -d '[]"[:space:]'
            cat dockerip
            """
-           sh 'ssh -o StrictHostKeyChecking=no ubuntu@$(cat dockip | tr -d '[]"[:space:]) uptime'
-           //ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime
+           //sh 'ssh -o StrictHostKeyChecking=no ubuntu@$(cat dockip | tr -d '[]"[:space:]) uptime'
+           sh 'ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime'
            //"""
        }
     }
