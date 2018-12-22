@@ -22,7 +22,7 @@ node('linux') {
            cat dockerip
            """
            //sh 'ssh -o StrictHostKeyChecking=no ubuntu@$(cat dockip | tr -d '[]"[:space:]) uptime'
-           sh 'ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime'
+           //sh 'ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime'
            //"""
        }
     }
