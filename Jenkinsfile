@@ -15,7 +15,7 @@ node('linux') {
            cat dockerip
            """
          sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
-           sh 'ssh -o StrictHostKeyChecking=no ubuntu@/'${cat dockerip}/' uptime'
+           sh 'ssh -o StrictHostKeyChecking=no ubuntu@${cat dockerip} uptime'
        }
     }
     stage("Deploy Redis") {
