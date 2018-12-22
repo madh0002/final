@@ -17,7 +17,7 @@ node('linux') {
         // Check for uptime
            sh 'dockip=\'aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" \'' 
            sh 'cat dockip'
-           sh 'cat dockip | tr -d \'"'[][:space:]"\''
+           sh 'cat dockip | tr -d \'"'[]"\''
 //           sh 'ssh -o StrictHostKeyChecking=no ubuntu@\' cat dockip.txt \' uptime'
        }
     }
