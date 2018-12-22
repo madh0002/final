@@ -24,8 +24,8 @@ node('linux') {
     stage("Deploy Redis") {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            sh 'ssh ubuntu@$(cat dockerip) \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
-           sh 'ssh ubuntu@34.239.255.153 \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
-           sh 'ssh ubuntu@34.239.255.153 \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
+           sh 'ssh ubuntu@$(cat dockerip) \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
+           sh 'ssh ubuntu@$(cat dockerip) \' docker run --name redisimage -d redis:latest -p 6379:6379 \''
            }
        }
     stage("Test Redis") {
@@ -34,12 +34,8 @@ node('linux') {
        //sh 'ssh ubuntu@52.90.213.249 \'docker ps -a\''
        //sh 'ssh ubuntu@34.224.70.117 \' sudo apt-get install redis-tools -y \''
        //sh 'ssh ubuntu@34.224.70.117 \' sudo apt-get install redis-server -y \''
-       sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.239.255.153 \' exec redis-cli set hello world\''
-       sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.239.255.153 \' exec redis-cli get hello\''
-           //sh 'ssh exec redis-cli -h 34.224.70.117 set hello world'
-       //sh 'ssh redis-cli set hello world'         
-       //sh 'exec redis-cli get hello'     
-       //test from a diff network
+       sh 'ssh -o StrictHostKeyChecking=no ubuntu@$(cat dockerip) \' exec redis-cli set hello world\''
+       sh 'ssh -o StrictHostKeyChecking=no ubuntu@$(cat dockerip) \' exec redis-cli get hello\''
        }
     }
     stage("Delete Stack") {
