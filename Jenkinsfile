@@ -1,5 +1,6 @@
 properties([pipelineTriggers([githubPush()])])
 def dockerip;
+def dockip;
 node('linux') {
     //parameters {
     //string(name: 'dockerip',
@@ -16,7 +17,7 @@ node('linux') {
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
            sh """
-           dockip=\'aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" \'
+           dockip='aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress"'
            cat dockip
            dockerip=cat dockip | tr -d '[]"[:space:]'
            cat dockerip
