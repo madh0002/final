@@ -19,7 +19,7 @@ node('linux') {
         echo "${dockip}"    
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
         // Check for uptime
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\'"$dockip" \' uptime'
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@\'$dockip \' uptime'
        }
     }
     stage("Deploy Redis") {
