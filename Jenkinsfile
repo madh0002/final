@@ -13,7 +13,7 @@ node('linux') {
            sh """
            aws ec2 describe-instances --region us-east-1 --filters "Name=image-id,Values=ami-f92ff686" --query "Reservations[*].Instances[*].PublicIpAddress" > dockip
            cat dockip
-           cat dockip | tr -d '[]"[:space:]' > dockerip
+           cat dockip | tr -d '[]",[:space:]' > dockerip
            cat dockerip
            """
         // check uptime
@@ -22,6 +22,7 @@ node('linux') {
        }
     }
     stage("Deploy Redis") {
+        // Deploying redis image
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            //sh 'ssh ubuntu@$(cat dockerip) \' docker stop $(docker ps -a -q --filter ancestor=redis)\''     
            //sh 'ssh ubuntu@$(cat dockerip) \' docker rm $(docker ps -a -q --filter ancestor=redis)\''             
@@ -29,6 +30,7 @@ node('linux') {
            }
        }
     stage("Test Redis") {
+        // test to make sure redis is reachable
        sshagent(['8d1f2576-2d78-4aa7-9782-8e8911d38127']) {
            sh 'docker ps -a'           
        //sh 'ssh ubuntu@52.90.213.249 \'docker ps -a\''
@@ -39,7 +41,7 @@ node('linux') {
        }
     }
     stage("Delete Stack") {
-       sh 'docker ps -a'
+         // delete the stack on successful test
        sh 'aws cloudformation delete-stack --stack-name final-test --region us-east-1'
     }
 }
